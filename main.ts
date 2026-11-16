@@ -7,7 +7,7 @@
 // here directly on node:crypto / node:zlib.
 //
 // Determinism: no wall clock and no randomness reach stored or returned
-// data. Timestamps derive from $MAKEFUN_TRIAL_NOW plus a sequential tick;
+// data. Timestamps derive from $FORGE_TRIAL_NOW plus a sequential tick;
 // every id is a sequential counter or a content hash.
 
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from 'node:http';
@@ -18,12 +18,12 @@ import { deflateSync, inflateSync } from 'node:zlib';
 // constants and deterministic time
 
 const OWNER = 'adaiversen';
-const TOKEN = process.env.MAKEFUN_SHOP_TOKEN ?? '';
+const TOKEN = process.env.FORGE_API_TOKEN ?? '';
 const JSON_TYPE = 'application/json; charset=utf-8';
 const ZERO_OID = '0'.repeat(40);
 
 function trialBaseSec(): number {
-  const raw = (process.env.MAKEFUN_TRIAL_NOW ?? '').trim();
+  const raw = (process.env.FORGE_TRIAL_NOW ?? '').trim();
   if (raw !== '') {
     const parsed = Date.parse(raw);
     if (!Number.isNaN(parsed)) return Math.floor(parsed / 1000);
@@ -3116,7 +3116,7 @@ function createApp(): Server {
 // ---------------------------------------------------------------------------
 // lifecycle: bind ephemeral, register, poll /done, exit 0
 
-const ENV_URL = (process.env.MAKEFUN_ENV_URL ?? '').replace(/\/+$/, '');
+const ENV_URL = (process.env.FORGE_ENV_URL ?? '').replace(/\/+$/, '');
 const REQUEST_TIMEOUT_MS = 30_000;
 const RETRY_INITIAL_MS = 250;
 const RETRY_MAX_MS = 2_000;
@@ -3161,7 +3161,7 @@ async function waitForDone(): Promise<void> {
 
 async function main(): Promise<void> {
   if (ENV_URL === '') {
-    process.stderr.write('[entry] MAKEFUN_ENV_URL is not set\n');
+    process.stderr.write('[entry] FORGE_ENV_URL is not set\n');
     process.exit(1);
   }
   const server = createApp();

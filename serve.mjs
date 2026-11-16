@@ -44,8 +44,8 @@ coordinator.listen(0, '127.0.0.1', () => {
     stdio: 'inherit',
     env: {
       ...process.env,
-      MAKEFUN_ENV_URL: `http://127.0.0.1:${coordinatorPort}`,
-      MAKEFUN_SHOP_TOKEN: TOKEN,
+      FORGE_ENV_URL: `http://127.0.0.1:${coordinatorPort}`,
+      FORGE_API_TOKEN: TOKEN,
     },
   });
   process.on('SIGINT', () => {
