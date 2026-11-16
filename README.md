@@ -51,7 +51,7 @@ A Model Context Protocol endpoint exposes forge operations as agent tools, inclu
 
 - **One file.** `main.ts` (about 124 KB) contains the entire server: HTTP routing, the REST and GraphQL layers, the MCP endpoint, and the git transport.
 - **Git from scratch.** Commits, trees, blobs, and tags are stored as content-addressed objects. Packfile generation and parsing, delta application, and pkt-line framing are implemented directly on `node:crypto` and `node:zlib`, with no git binary involved on the server side.
-- **Deterministic by design.** No wall clock and no randomness reach stored or returned data. Timestamps tick sequentially from a fixed base and every id is a counter or a content hash, so identical request sequences produce byte-identical responses.
+- **Deterministic.** No wall clock and no randomness reach stored or returned data. Timestamps tick sequentially from a fixed base and every id is a counter or a content hash, so identical request sequences produce byte-identical responses.
 - **Zero dependencies.** Only the Node standard library. Node 22+ runs the TypeScript source directly.
 
 ## Layout
